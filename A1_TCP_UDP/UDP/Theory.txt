@@ -1,0 +1,108 @@
+Socket Programming:
+    Socket programming allows communication between two devices (e.g., computers) over a network. It involves creating a socket (a combination of an IP address and a port number) to send and receive data.
+
+Basic Concepts:
+    Socket: An endpoint for communication identified by an IP address and port number.
+
+Client-Server Model:
+
+    Server: Listens on a specific port for incoming client requests.
+    Client: Sends requests to the server using its IP and port.
+Types of Sockets:
+
+    TCP Sockets (Stream): Reliable, connection-based communication using TCP (Transmission Control Protocol).
+    UDP Sockets (Datagram): Unreliable, faster communication using UDP (User Datagram Protocol).
+
+
+
+---------------- ONLY FOR TCP-------------------
+
+
+   TCP (Transmission Control Protocol):
+TCP is a connection-oriented protocol used for reliable data transmission over a network.
+
+Key Features:
+Connection-Oriented: A connection is established between the client and server before data transmission begins.
+Reliable: Ensures that data sent is received in the correct order without errors.
+Flow Control: Manages the rate of data transmission to prevent network congestion.
+Error Detection and Correction: If data is lost or corrupted, TCP requests retransmission.
+Full-Duplex: Both client and server can send and receive data simultaneously.
+Example Use Cases:
+Web browsing (HTTP/HTTPS)
+File transfer (FTP)
+Email (SMTP, IMAP)
+
+TCP Socket Communication Process (Minimized)
+Socket Creation
+
+Server: ServerSocket serverSocket = new ServerSocket(8080);
+Client: Socket clientSocket = new Socket("localhost", 8080);
+Server Listening
+
+Server listens for client connections: serverSocket.accept();
+Client Connection Request
+
+Client initiates a connection: clientSocket.connect(serverAddress, 8080);
+Three-Way Handshake
+
+SYN: Client sends a SYN request.
+SYN-ACK: Server responds with SYN-ACK.
+ACK: Client confirms with an ACK.
+Data Exchange
+
+Client and server send/receive data via input and output streams.
+Connection Termination
+
+FIN: Either side sends a FIN packet to close the connection.
+ACK: Acknowledgement of the closure.
+
+
+
+-----------------ONLY FOR UDP----------------
+
+UDP (User Datagram Protocol):
+UDP is a connectionless protocol used for faster, but less reliable, data transmission.
+
+Key Features:
+Connectionless: No connection is established before transmission, and each packet is sent independently.
+Unreliable: No guarantee that packets will reach their destination or arrive in the correct order.
+Low Overhead: UDP has less protocol overhead, making it faster than TCP.
+No Error Correction: If data is lost, it is not retransmitted.
+Example Use Cases:
+Real-time applications (e.g., video calls, VoIP)
+Online gaming
+Streaming services (e.g., live broadcasts)
+
+
+
+
+
+
+
+
+UDP Socket Communication Process
+Socket Creation
+
+Both the client and server create a socket to send and receive data, but UDP does not establish a connection before transmitting data.
+Server: DatagramSocket serverSocket = new DatagramSocket(8080);
+Client: DatagramSocket clientSocket = new DatagramSocket();
+Data Transmission
+
+UDP is connectionless, meaning the client sends a packet (called a Datagram) directly to the server without establishing a connection.
+
+Data Reception
+
+The server receives data sent by the client using a DatagramPacket. Similarly, the client can receive responses from the server in the same manner.
+No Handshake or Connection Management
+
+Unlike TCP, UDP does not perform any handshake or connection setup, so there is no acknowledgment or retransmission of lost packets.
+If a packet is lost during transmission, it is not automatically retried.
+Socket Closure
+
+The sockets are closed manually once the communication is complete.
+Client: clientSocket.close();
+Server: serverSocket.close();
+Key Features of UDP:
+Unreliable: No guarantee of packet delivery or order.
+Connectionless: No connection setup or teardown, making it faster.
+Low Overhead: No need for establishing or maintaining a connection, making it more efficient for simple communications like DNS or streaming.
